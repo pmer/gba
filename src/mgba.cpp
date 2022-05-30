@@ -14,11 +14,19 @@
 #define MGBA_LOG_INFO 3
 #define MGBA_LOG_DEBUG 4
 
-static bool initialized = false;
+#define STATUS_UNINITIALIZED 0
+#define STATUS_OKAY 1
+#define STATUS_NOT_MGBA 2
 
-static void
-mgbaInit() noexcept {
-    *REG_DEBUG_ENABLE = 0xC0DE;
+static int status = STATUS_UNINITIALIZED;
+
+static bool
+isMgba() noexcept {
+    if (status == STATUS_UNINITIALIZED) {
+        *REG_DEBUG_ENABLE = 0xC0DE;
+        status = *REG_DEBUG_ENABLE == 0x1DEA ? STATUS_OKAY : STATUS_NOT_MGBA;
+    }
+    return status == STATUS_OKAY;
 }
 
 static char*
@@ -104,9 +112,8 @@ vsprintf_(char* buf, const char* format, va_list va) noexcept {
 
 void
 printf_(const char* format, ...) noexcept {
-    if (!initialized) {
-        initialized = true;
-        mgbaInit();
+    if (!isMgba()) {
+        return;
     }
     va_list va;
     va_start(va, format);

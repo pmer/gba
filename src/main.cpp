@@ -51,10 +51,12 @@ halt() noexcept {
 
 int
 main() noexcept {
+    printf_("Hello, world!");
+
     REG_DISPCNT = DCNT_MODE0 | DCNT_BG0;
 
-    irq_init(0);
-    irq_add(II_VBLANK, 0);
+    irq_init(nullptr);
+    irq_add(II_VBLANK, nullptr);
 
     REG_SNDSTAT = SSTAT_ENABLE;
     REG_SNDDMGCNT = SDMG_BUILD_LR(SDMG_SQR1, 7);
