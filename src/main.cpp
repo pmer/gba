@@ -28,11 +28,10 @@ drawPattern() noexcept {
 #pragma ide diagnostic ignored "EndlessLoop"
     while (true) {
         int x, y;
-        for (y = 0; y < 160; ++y) {
-            for (x = 0; x < 240; ++x) {
-                vid_mem[x + y * 240] = ((((x & y) + t) & 0x1F) << 10) |
-                                       ((((x & y) + t * 3) & 0x1F) << 5) |
-                                       ((((x & y) + t * 5) & 0x1F) << 0);
+        for (y = 0; y < SCREEN_HEIGHT; ++y) {
+            for (x = 0; x < SCREEN_WIDTH; ++x) {
+                int base = x & y;
+                vid_mem[x + y * SCREEN_WIDTH] = RGB15_SAFE(base + t * 5, base + t * 3, base + t);
             }
         }
         ++t;
