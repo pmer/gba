@@ -5,5 +5,5 @@ COPY src /build/src
 RUN \
     mkdir build && \
     cd build && \
-    cmake .. && \
+    cmake .. -DCMAKE_BUILD_TYPE=Debug && \
     make VERBOSE=1

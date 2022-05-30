@@ -49,10 +49,18 @@ add_custom_command(
 #arm-none-eabi-gcc -MMD -MP -MF /c/GBA_VSCode_Basic/build/main.d -g -Wall -O3 -mcpu=arm7tdmi -mtune=arm7tdmi -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -iquote /c/GBA_VSCode_Basic/include -iquote /c/GBA_VSCode_Basic/resources -I/opt/devkitpro/libgba/include -I/c/GBA_VSCode_Basic/build -c /c/GBA_VSCode_Basic/source/main.c -o main.o
 #arm-none-eabi-gcc  -g -mthumb -mthumb-interwork -Wl,-Map,GBA_VSCode_Basic.map -specs=gba.specs   main.o  -L/opt/devkitpro/libgba/lib -lmm -lgba -o /c/GBA_VSCode_Basic/GBA_VSCode_Basic.elf
 
-set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -mcpu=arm7tdmi -mtune=arm7tdmi -mthumb -mthumb-interwork")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mcpu=arm7tdmi -mtune=arm7tdmi -mthumb -mthumb-interwork")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_C_FLAGS} -fno-rtti -fno-exceptions")
+set(COMPILE_FLAGS "-mcpu=arm7tdmi -mtune=arm7tdmi -mthumb -mthumb-interwork")
+set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} ${COMPILE_FLAGS}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILE_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_COMPILE_FLAGS} -fno-rtti -fno-exceptions")
+
+set(FLAGS_RELEASE "-fomit-frame-pointer -fno-unwind-tables -fno-asynchronous-unwind-tables -fvisibility=hidden -ffast-math -fno-stack-protector -flto")
+set(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} ${FLAGS_RELEASE}")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${FLAGS_RELEASE}")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${FLAGS_RELEASE}")
+
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -specs=gba.specs")
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_RELEASE_FLAGS} -flto")
 
 #target_link_directories(untitled PUBLIC ${DEVKITPRO}/libgba/lib)
 #target_link_libraries(untitled mm)

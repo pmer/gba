@@ -112,6 +112,7 @@ vsprintf_(char* buf, const char* format, va_list va) noexcept {
 
 void
 printf_(const char* format, ...) noexcept {
+#ifndef NDEBUG
     if (!isMgba()) {
         return;
     }
@@ -120,4 +121,5 @@ printf_(const char* format, ...) noexcept {
     vsprintf_(REG_DEBUG_STRING, format, va);
     va_end(va);
     *REG_DEBUG_FLAGS = MGBA_LOG_WARN | 0x100;
+#endif
 }
