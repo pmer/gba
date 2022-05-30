@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.18)
 include($ENV{DEVKITPRO}/cmake/devkitARM.cmake)
 project(untitled)
 
@@ -16,7 +16,7 @@ add_executable(
 
 #set(CMAKE_LINK_FLAGS "-specs=gba.specs -L${DEVKITPRO}/libgba/lib -lmm -lgba")
 
-#set(CMAKE_EXECUTABLE_SUFFIX .elf)
+set(CMAKE_EXECUTABLE_SUFFIX .elf)
 
 #set(CMAKE_ASM_OUTPUT_EXTENSION .o)
 #set(CMAKE_C_OUTPUT_EXTENSION .o)
