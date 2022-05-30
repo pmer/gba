@@ -79,8 +79,7 @@ drawLine(s32 x, s32 y, s32 x2, s32 y2, COLOR color) noexcept {
             numerator -= longest;
             x += dx1;
             y += dy1;
-        }
-        else {
+        } else {
             x += dx2;
             y += dy2;
         }
@@ -123,29 +122,155 @@ halt() noexcept {
 #pragma clang diagnostic pop
 }
 
+static s32 seed = 42;
+
+static s32
+rand_() noexcept {
+    seed = 1664525 * seed + 1013904223;
+    return (seed >> 16) & 0x7FFF;
+}
+
+static s32
+randRange(s32 min, s32 max) noexcept {
+    return rand_() % (max - min + 1) + min;
+}
+
+struct Ball {
+    s32 x, y;
+    s32 dx, dy;
+    s32 size;
+    COLOR color;
+};
+
+static void
+ballStart(Ball* ball) noexcept {
+    ball->dx = randRange(0, 1) ? 1 : -1;
+    ball->dy = randRange(-1, 1);
+}
+
+static void
+ballInit(Ball* ball, s32 x, s32 y, s32 size, COLOR color) noexcept {
+    ball->x = x;
+    ball->y = y;
+    ball->size = size;
+    ball->color = color;
+    ballStart(ball);
+}
+
+static void
+ballMove(Ball* ball) noexcept {
+    ball->y += ball->dy;
+    if (ball->y < 0 || ball->y > SCREEN_HEIGHT - ball->size) {
+        ball->y = max(0, min(SCREEN_HEIGHT - ball->size, ball->y));
+        ball->dy *= -1;
+    }
+
+    ball->x += ball->dx;
+    if (ball->x < 0 || ball->x > SCREEN_WIDTH - ball->size) {
+        ball->x = SCREEN_WIDTH >> 1;
+        ball->y = SCREEN_HEIGHT >> 1;
+        ballStart(ball);
+    }
+}
+
+static void
+ballDraw(Ball* ball) noexcept {
+    drawRect(ball->x, ball->y, ball->size, ball->size, ball->color);
+}
+
+static void
+ballClear(Ball* ball) noexcept {
+    drawRect(ball->x, ball->y, ball->size, ball->size, CLR_BLACK);
+}
+
+static void
+vsync() noexcept {
+    while (REG_VCOUNT >= SCREEN_HEIGHT);
+    while (REG_VCOUNT < SCREEN_HEIGHT);
+}
+
+struct Paddle {
+    s32 x, y;
+    s32 width, height;
+    COLOR color;
+};
+
+static void
+paddleInit(Paddle* paddle, s32 x, s32 y, s32 width, s32 height, COLOR color) noexcept {
+    paddle->x = x;
+    paddle->y = y;
+    paddle->width = width;
+    paddle->height = height;
+    paddle->color = color;
+}
+
+static void
+paddleDraw(Paddle* paddle) noexcept {
+    drawRect(paddle->x, paddle->y, paddle->width, paddle->height, paddle->color);
+}
+
+static void
+paddleClear(Paddle* paddle) noexcept {
+    drawRect(paddle->x, paddle->y, paddle->width, paddle->height, CLR_BLACK);
+}
+
 int
 main() noexcept {
-    printf_("Hello, world!");
+    //printf_("Hello, world!");
+
+    mode3();
+
+    seed = 23343;
+
+    Ball ball;
+    ballInit(&ball, SCREEN_WIDTH >> 1, SCREEN_HEIGHT >> 1, 10, CLR_WHITE);
+
+    Paddle p1;
+    paddleInit(&p1, 10, 60, 8, 40, CLR_BLUE);
+
+    Paddle p2;
+    paddleInit(&p2, SCREEN_WIDTH - 18, 60, 8, 40, CLR_RED);
+
+    while (true) {
+        ballClear(&ball);
+        paddleClear(&p1);
+        paddleClear(&p2);
+
+        ballMove(&ball);
+
+        ballDraw(&ball);
+        paddleDraw(&p1);
+        paddleDraw(&p2);
+
+        drawLine(10, 4, 230, 4, CLR_WHITE);
+        drawLine(230, 156, 10, 156, CLR_WHITE);
+
+        vsync();
+    }
 
     //REG_DISPCNT = DCNT_MODE0 | DCNT_BG0;
 
+    /*
     mode3();
 
     COLOR salmon = RGB15(31, 5, 12);
     drawRect(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40, salmon);
 
     COLOR green = RGB15(1, 24, 16);
-    drawLine(20-1, 20-1, 0-1, 0-1, green); // Top-left.
-    drawLine(220, 20-1, 240, 0-1, green); // Top-right.
-    drawLine(20-1, 140, 0-1, 160, green); // Bottom-left.
+    drawLine(20 - 1, 20 - 1, 0 - 1, 0 - 1, green); // Top-left.
+    drawLine(220, 20 - 1, 240, 0 - 1, green); // Top-right.
+    drawLine(20 - 1, 140, 0 - 1, 160, green); // Bottom-left.
     drawLine(220, 140, 240, 160, green); // Bottom-right.
+    */
 
+    /*
     irq_init(nullptr);
     irq_add(II_VBLANK, nullptr);
 
-    sing();
+    //sing();
 
     drawPattern();
 
     halt();
+    */
 }
