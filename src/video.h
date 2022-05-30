@@ -14,10 +14,12 @@
 #define GREEN_SHIFT 5
 #define BLUE_SHIFT 10
 
-static inline COLOR RGB15_SAFE_(int red, int green, int blue) noexcept {
+static inline
+COLOR RGB15_SAFE_(int red, int green, int blue) noexcept {
     return ((red & 31) << RED_SHIFT) + ((green & 31) << GREEN_SHIFT) + ((blue & 31) << BLUE_SHIFT);
 }
 
-static inline COLOR RGB15_(u8 red, u8 green, u8 blue) noexcept {
+static inline
+COLOR RGB15_(u8 red, u8 green, u8 blue) noexcept {
     return (red << RED_SHIFT) + (green << GREEN_SHIFT) + (blue << BLUE_SHIFT);
 }
