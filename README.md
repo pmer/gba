@@ -1,5 +1,8 @@
 ## Playground for a Gameboy Advance app
 
+![CI build status](https://github.com/pmer/gba/actions/workflows/build.yml/badge.svg)
+[Download latest CI build](https://nightly.link/pmer/gba/workflows/build/main/untitled.gba.zip)
+
 To build, install [devkitPro](https://devkitpro.org/wiki/Getting_Started) and
 get its gba-dev package, and set `$DEVKITPRO` to the install root. This should
 be sufficient to get a CMake build going, which will produce a `.gba` file.
