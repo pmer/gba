@@ -2,7 +2,7 @@
 
 ![CI build status](https://github.com/pmer/gba/actions/workflows/build.yml/badge.svg)
 
-<a class="btn" href="https://nightly.link/pmer/gba/workflows/build/main/untitled.gba.zip">Download latest CI build</a>
+[Download](https://nightly.link/pmer/gba/workflows/build/main/untitled.gba.zip)
 
 To build, install [devkitPro](https://devkitpro.org/wiki/Getting_Started) and
 get its gba-dev package, and set `$DEVKITPRO` to the install root. This should
