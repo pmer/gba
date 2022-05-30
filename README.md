@@ -10,7 +10,8 @@ Open the nightly build in any Game Boy Advance emulator.
 
 #### Development
 
-Building can be done on any Windows, macOS, or Linux.
+Building can be done on any Windows, macOS, or Linux that runs AMD64. (This is
+what has been tested. If other environments work, please share!)
 
 To build, install [devkitPro](https://devkitpro.org/wiki/Getting_Started) and
 get its `gba-dev` package, and set `$DEVKITPRO` to the install root. This
