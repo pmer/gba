@@ -5,8 +5,9 @@
 [Download binary](https://nightly.link/pmer/gba/workflows/build/main/untitled.gba.zip)
 
 To build, install [devkitPro](https://devkitpro.org/wiki/Getting_Started) and
-get its gba-dev package, and set `$DEVKITPRO` to the install root. This should
-be sufficient to get a CMake build going, which will produce a `.gba` file.
+get its `gba-dev` package, and set `$DEVKITPRO` to the install root. This
+should be sufficient to get a CMake build going, which will produce a `.gba`
+file.
 
 To debug, launch [mGBA](https://mgba.io/) with the `-g` flag,  as in `mgba -g
 build/untitled.gba`, which will cause it to start a GDB server and wait for a
