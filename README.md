@@ -2,7 +2,7 @@
 
 ![CI build status](https://github.com/pmer/gba/actions/workflows/build.yml/badge.svg)
 
-[Download binary](https://nightly.link/pmer/gba/workflows/build/main/untitled.gba.zip)
+[Download nightly ROM](https://nightly.link/pmer/gba/workflows/build/main/untitled.gba.zip)
 
 To build, install [devkitPro](https://devkitpro.org/wiki/Getting_Started) and
 get its `gba-dev` package, and set `$DEVKITPRO` to the install root. This
