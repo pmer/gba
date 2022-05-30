@@ -17,3 +17,5 @@ Some IDEs, like CLion and Visual Studio Code, support remote GDB debugging and
 will provide a nice UI while doing so.
 
 To view runtime print statements, go to Tools -> Logs in the mGBA menu bar.
+
+![Example image of debugging with CLion](img/debugging.png)
