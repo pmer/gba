@@ -6,9 +6,19 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(
         untitled
+        src/gfx.cpp
+        src/gfx.h
         src/main.cpp
+        src/math.cpp
+        src/math.h
         src/mgba.cpp
+        src/pong.cpp
+        src/pong.h
         src/print.h
+        src/reg.h
+        src/song.cpp
+        src/song.h
+        src/video.h
 )
 
 #add_custom_target(run COMMAND $ENV{MGBA} ${CMAKE_CURRENT_BINARY_DIR}/untitled.gba)
