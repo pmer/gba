@@ -10,6 +10,8 @@ Open the nightly build in any Game Boy Advance emulator.
 
 #### Development
 
+Building can be done on any Windows, macOS, or Linux.
+
 To build, install [devkitPro](https://devkitpro.org/wiki/Getting_Started) and
 get its `gba-dev` package, and set `$DEVKITPRO` to the install root. This
 should be sufficient to get a CMake build going, which will produce a `.gba`
