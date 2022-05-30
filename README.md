@@ -1,8 +1,14 @@
-## Playground for a Gameboy Advance app
+## Playground for a Game Boy Advance app
 
 ![CI build status](https://github.com/pmer/gba/actions/workflows/build.yml/badge.svg)
 
+#### Running
+
+Open the nightly build in any Game Boy Advance emulator.
+
 [Download nightly ROM](https://nightly.link/pmer/gba/workflows/build/main/untitled.gba.zip)
+
+#### Development
 
 To build, install [devkitPro](https://devkitpro.org/wiki/Getting_Started) and
 get its `gba-dev` package, and set `$DEVKITPRO` to the install root. This
