@@ -1,13 +1,14 @@
 #include "song.h"
+#include "reg.h"
 
+extern "C" {
 #include <tonc_bios.h>
 #include <tonc_core.h>
-#include <tonc_memdef.h>
-#include <tonc_memmap.h>
+}
 
 static void
 notePlay(int note, int octave) noexcept {
-    REG_SND1FREQ = SFREQ_RESET | SND_RATE(note, octave);
+    REG_SND1FREQ_ = SFREQ_RESET_ | SND_RATE(note, octave);
 }
 
 static void
@@ -23,13 +24,13 @@ sos() noexcept {
 
 void
 sing() noexcept {
-    REG_SNDSTAT = SSTAT_ENABLE;
-    REG_SNDDMGCNT = SDMG_BUILD_LR(SDMG_SQR1, 7);
-    REG_SNDDSCNT = SDS_DMG100;
+    REG_SNDSTAT_ = SSTAT_ENABLE_;
+    REG_SNDDMGCNT_ = SDMG_BUILD_LR_(SDMG_SQR1, 7);
+    REG_SNDDSCNT_ = SDS_DMG100_;
 
-    REG_SND1SWEEP = SSW_OFF;
-    REG_SND1CNT = SSQR_ENV_BUILD(12, 0, 7) | SSQR_DUTY1_2;
-    REG_SND1FREQ = 0;
+    REG_SND1SWEEP_ = SSW_OFF_;
+    REG_SND1CNT_ = SSQR_ENV_BUILD_(12, 0, 7) | SSQR_DUTY1_2_;
+    REG_SND1FREQ_ = 0;
 
     sos();
 }
