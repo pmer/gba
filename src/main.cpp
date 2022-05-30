@@ -20,8 +20,8 @@ sos() noexcept {
 
 static void
 drawPattern() noexcept {
-    // Set GBA rendering context to MODE 3 Bitmap Rendering.
-    *(unsigned int *) 0x04000000 = 0x0403;
+    // Set GBA rendering context to mode 3 with bitmap rendering.
+    REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
 
     int t = 0;
 #pragma clang diagnostic push
@@ -30,9 +30,9 @@ drawPattern() noexcept {
         int x, y;
         for (y = 0; y < 160; ++y) {
             for (x = 0; x < 240; ++x) {
-                ((unsigned short *) 0x06000000)[x + y * 240] = ((((x & y) + t) & 0x1F) << 10) |
-                                                               ((((x & y) + t * 3) & 0x1F) << 5) |
-                                                               ((((x & y) + t * 5) & 0x1F) << 0);
+                vid_mem[x + y * 240] = ((((x & y) + t) & 0x1F) << 10) |
+                                       ((((x & y) + t * 3) & 0x1F) << 5) |
+                                       ((((x & y) + t * 5) & 0x1F) << 0);
             }
         }
         ++t;
@@ -66,6 +66,8 @@ main() noexcept {
     REG_SND1FREQ = 0;
 
     sos();
+
+    drawPattern();
 
     halt();
 }
