@@ -19,6 +19,19 @@ sos() noexcept {
 }
 
 static void
+sing() noexcept {
+    REG_SNDSTAT = SSTAT_ENABLE;
+    REG_SNDDMGCNT = SDMG_BUILD_LR(SDMG_SQR1, 7);
+    REG_SNDDSCNT = SDS_DMG100;
+
+    REG_SND1SWEEP = SSW_OFF;
+    REG_SND1CNT = SSQR_ENV_BUILD(12, 0, 7) | SSQR_DUTY1_2;
+    REG_SND1FREQ = 0;
+
+    sos();
+}
+
+static void
 drawPattern() noexcept {
     // Set GBA rendering context to mode 3 with bitmap rendering.
     REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
@@ -53,20 +66,12 @@ int
 main() noexcept {
     printf_("Hello, world!");
 
-    REG_DISPCNT = DCNT_MODE0 | DCNT_BG0;
+    //REG_DISPCNT = DCNT_MODE0 | DCNT_BG0;
 
     irq_init(nullptr);
     irq_add(II_VBLANK, nullptr);
 
-    REG_SNDSTAT = SSTAT_ENABLE;
-    REG_SNDDMGCNT = SDMG_BUILD_LR(SDMG_SQR1, 7);
-    REG_SNDDSCNT = SDS_DMG100;
-
-    REG_SND1SWEEP = SSW_OFF;
-    REG_SND1CNT = SSQR_ENV_BUILD(12, 0, 7) | SSQR_DUTY1_2;
-    REG_SND1FREQ = 0;
-
-    sos();
+    sing();
 
     drawPattern();
 
