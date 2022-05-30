@@ -58,9 +58,9 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -specs=gba.specs")
 #target_link_libraries(untitled mm)
 #target_link_libraries(untitled gba)
 
-#target_link_directories(untitled PUBLIC ${DEVKITPRO}/libtonc/lib)
+target_link_directories(untitled PUBLIC ${DEVKITPRO}/libtonc/lib)
 target_include_directories(untitled PUBLIC ${DEVKITPRO}/libtonc/include)
-#target_link_libraries(untitled tonc)
+target_link_libraries(untitled tonc)
 
 
 # Core components:

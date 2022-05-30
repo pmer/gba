@@ -1,29 +1,25 @@
 #include "print.h"
 
-/*
-#if defined(__thumb__)
-#define BiosSystemCall(Number) __asm ("SWI "#Number"\n" ::: "r0", "r1", "r2", "r3")
-#else
-#define	BiosSystemCall(Number) __asm ("SWI "#Number" << 16\n" ::: "r0", "r1", "r2", "r3")
-#endif
+#include <tonc.h>
 
-// Don't let the compiler optimise seemingly empty bios call statements away
-#pragma GCC push_options
-#pragma GCC optimize ("O0")
-
-// Will crash on actual hardware
-inline void AGBPrint(const char *message) {
-    BiosSystemCall(0xFF);
+static void
+notePlay(int note, int octave) noexcept {
+    REG_SND1FREQ = SFREQ_RESET | SND_RATE(note, octave);
 }
 
-#pragma GCC pop_options
-*/
+static void
+sos() noexcept {
+    const u8 lens[6] = {1, 1, 4, 1, 1, 4};
+    const u8 notes[6] = {2, 5, 18, 2, 5, 18};
 
+    for (int i = 0; i < 6; i++) {
+        notePlay(notes[i] & 15, notes[i] >> 4);
+        VBlankIntrDelay(8 * lens[i]);
+    }
+}
 
-int main() {
-    printf("sizeof(int): %d", sizeof(int));
-    printf("Setting mode to 3 at %p", 0x04000000);
-
+static void
+drawPattern() noexcept {
     // Set GBA rendering context to MODE 3 Bitmap Rendering.
     *(unsigned int *) 0x04000000 = 0x0403;
 
@@ -42,5 +38,34 @@ int main() {
         ++t;
     }
 #pragma clang diagnostic pop
-    return 0;
+}
+
+static void
+halt() noexcept {
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "EndlessLoop"
+    while (true) {
+        VBlankIntrWait();
+    }
+#pragma clang diagnostic pop
+}
+
+int
+main() noexcept {
+    REG_DISPCNT = DCNT_MODE0 | DCNT_BG0;
+
+    irq_init(0);
+    irq_add(II_VBLANK, 0);
+
+    REG_SNDSTAT = SSTAT_ENABLE;
+    REG_SNDDMGCNT = SDMG_BUILD_LR(SDMG_SQR1, 7);
+    REG_SNDDSCNT = SDS_DMG100;
+
+    REG_SND1SWEEP = SSW_OFF;
+    REG_SND1CNT = SSQR_ENV_BUILD(12, 0, 7) | SSQR_DUTY1_2;
+    REG_SND1FREQ = 0;
+
+    sos();
+
+    halt();
 }

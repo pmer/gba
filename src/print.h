@@ -2,6 +2,6 @@
 #define PRINT_H_
 
 void
-printf(const char* format, ...);
+printf_(const char* format, ...);
 
 #endif // PRINT_H_

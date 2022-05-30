@@ -57,7 +57,7 @@ ntoh(char* buf, size_t i) noexcept {
 }
 
 static void
-vsprintf(char* buf, const char* format, va_list va) noexcept {
+vsprintf_(char* buf, const char* format, va_list va) noexcept {
     char c;
     while ((c = *format++)) {
         if (c != '%') {
@@ -103,14 +103,14 @@ vsprintf(char* buf, const char* format, va_list va) noexcept {
 }
 
 void
-printf(const char* format, ...) noexcept {
+printf_(const char* format, ...) noexcept {
     if (!initialized) {
         initialized = true;
         mgbaInit();
     }
     va_list va;
     va_start(va, format);
-    vsprintf(REG_DEBUG_STRING, format, va);
+    vsprintf_(REG_DEBUG_STRING, format, va);
     va_end(va);
     *REG_DEBUG_FLAGS = MGBA_LOG_WARN | 0x100;
 }
