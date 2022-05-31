@@ -4,12 +4,6 @@
 #include "hw/video.h"
 
 /**
- * Set GBA rendering context to mode 3 with bitmap rendering.
- */
-void
-mode3() noexcept;
-
-/**
  * Draw rectangle from left, top (inclusive) with width, height (exclusive).
  */
 void

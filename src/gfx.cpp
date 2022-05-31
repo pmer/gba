@@ -4,11 +4,6 @@
 #include "hw/video.h"
 
 void
-mode3() noexcept {
-    REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
-}
-
-void
 drawRect(i32 left, i32 top, i32 width, i32 height, Color color) noexcept {
     i32 right = left + width;
     i32 bottom = top + height;

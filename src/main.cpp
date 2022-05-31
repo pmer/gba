@@ -8,7 +8,7 @@
 
 static void
 drawPattern() noexcept {
-    mode3();
+    REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
 
     int t = 0;
 #pragma clang diagnostic push
@@ -18,7 +18,7 @@ drawPattern() noexcept {
         for (y = 0; y < SCREEN_HEIGHT; ++y) {
             for (x = 0; x < SCREEN_WIDTH; ++x) {
                 int base = x & y;
-                M3_MEM[y][x] = colorSafe(base + t * 5, base + t * 3, base + t);
+                M3_MEM[y][x] = COLOR_SAFE(base + t * 5, base + t * 3, base + t);
             }
         }
         ++t;
@@ -47,10 +47,10 @@ main() noexcept {
     /*
     mode3();
 
-    COLOR salmon = RGB15_(31, 5, 12);
+    COLOR salmon = RGB15(31, 5, 12);
     drawRect(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40, salmon);
 
-    COLOR green = RGB15_(1, 24, 16);
+    COLOR green = RGB15(1, 24, 16);
     drawLine(20 - 1, 20 - 1, 0 - 1, 0 - 1, green); // Top-left.
     drawLine(220, 20 - 1, 240, 0 - 1, green); // Top-right.
     drawLine(20 - 1, 140, 0 - 1, 160, green); // Bottom-left.

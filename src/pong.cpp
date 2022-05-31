@@ -89,7 +89,7 @@ pong() noexcept {
     paddleInit(&p1, 10, 60, 8, 40, CLR_BLUE);
     paddleInit(&p2, SCREEN_WIDTH - 18, 60, 8, 40, CLR_RED);
 
-    mode3();
+    REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
 
     while (true) {
         ballClear(&ball);
