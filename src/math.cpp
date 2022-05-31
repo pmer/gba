@@ -1,26 +1,28 @@
 #include "math.h"
 
-s32
-abs(s32 i) noexcept {
-    s32 mask = i >> 31;
+#include "hw/int.h"
+
+i32
+abs(i32 i) noexcept {
+    i32 mask = i >> 31;
     return (i ^ mask) - mask;
 }
 
-static s32 seed = 42;
+static i32 seed = 42;
 
-static s32
+static i32
 rand_() noexcept {
     seed = 1664525 * seed + 1013904223;
-    return (seed >> 16) & 0x7FFF;
+    return (seed >> 16) & 0x7fff;
 }
 
 void
-randSeed(s32 seed_) noexcept {
+randSeed(i32 seed_) noexcept {
     seed = seed_;
 }
 
-s32
-randRange(s32 min, s32 max) noexcept {
+i32
+randRange(i32 min, i32 max) noexcept {
     //return rand_() % (max - min + 1) + min;
     return (rand_() * (max - min + 1) >> 15) + min;
 }

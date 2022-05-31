@@ -1,8 +1,7 @@
 #pragma once
 
-extern "C" {
-#include <tonc_types.h>
-}
+#include "hw/int.h"
+#include "hw/video.h"
 
 /**
  * Set GBA rendering context to mode 3 with bitmap rendering.
@@ -14,13 +13,13 @@ mode3() noexcept;
  * Draw rectangle from left, top (inclusive) with width, height (exclusive).
  */
 void
-drawRect(s32 left, s32 top, s32 width, s32 height, COLOR color) noexcept;
+drawRect(i32 left, i32 top, i32 width, i32 height, Color color) noexcept;
 
 /**
  * Draw line from x, y (inclusive) to x2, y2 (inclusive).
  */
 void
-drawLine(s32 x, s32 y, s32 x2, s32 y2, COLOR color) noexcept;
+drawLine(i32 x, i32 y, i32 x2, i32 y2, Color color) noexcept;
 
 void
 vsync() noexcept;

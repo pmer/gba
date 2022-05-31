@@ -1,12 +1,13 @@
 #include "print.h"
 
+#include "hw/int.h"
+
 #include <stdarg.h>
 #include <string.h>
-#include <tonc_types.h>
 
-#define REG_DEBUG_ENABLE (vu16*)0x4FFF780
-#define REG_DEBUG_FLAGS (vu16*)0x4FFF700
-#define REG_DEBUG_STRING (char*)0x4FFF600
+#define REG_DEBUG_ENABLE (vu16*)0x4fff780
+#define REG_DEBUG_FLAGS (vu16*)0x4fff700
+#define REG_DEBUG_STRING (char*)0x4fff600
 
 #define MGBA_LOG_FATAL 0
 #define MGBA_LOG_ERROR 1
@@ -23,8 +24,8 @@ static int status = STATUS_UNINITIALIZED;
 static bool
 isMgba() noexcept {
     if (status == STATUS_UNINITIALIZED) {
-        *REG_DEBUG_ENABLE = 0xC0DE;
-        status = *REG_DEBUG_ENABLE == 0x1DEA ? STATUS_OKAY : STATUS_NOT_MGBA;
+        *REG_DEBUG_ENABLE = 0xc0de;
+        status = *REG_DEBUG_ENABLE == 0x1dea ? STATUS_OKAY : STATUS_NOT_MGBA;
     }
     return status == STATUS_OKAY;
 }

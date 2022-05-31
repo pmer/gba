@@ -1,17 +1,25 @@
 #pragma once
 
-extern "C" {
-#include <tonc_types.h>
-}
+#include "hw/int.h"
 
-s32
-abs(s32 i) noexcept;
+i32
+abs(i32 i) noexcept;
 
 void
-randSeed(s32 seed) noexcept;
+randSeed(i32 seed) noexcept;
 
 /**
  * Random number from min to max, inclusive.
  */
-s32
-randRange(s32 min, s32 max) noexcept;
+i32
+randRange(i32 min, i32 max) noexcept;
+
+static inline int
+max(int a, int b) noexcept {
+    return a > b ? a : b;
+}
+
+static inline int
+min(int a, int b) noexcept {
+    return a < b ? a : b;
+}

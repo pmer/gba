@@ -1,13 +1,10 @@
 #include "gfx.h"
 #include "pong.h"
 #include "print.h"
-#include "reg.h"
 #include "song.h"
-#include "video.h"
+#include "tonc.h"
 
-extern "C" {
-#include <tonc_bios.h>
-}
+#include "hw/video.h"
 
 static void
 drawPattern() noexcept {
@@ -18,10 +15,10 @@ drawPattern() noexcept {
 #pragma ide diagnostic ignored "EndlessLoop"
     while (true) {
         int x, y;
-        for (y = 0; y < SCREEN_HEIGHT_; ++y) {
-            for (x = 0; x < SCREEN_WIDTH_; ++x) {
+        for (y = 0; y < SCREEN_HEIGHT; ++y) {
+            for (x = 0; x < SCREEN_WIDTH; ++x) {
                 int base = x & y;
-                vid_mem_[x + y * SCREEN_WIDTH_] = RGB15_SAFE_(base + t * 5, base + t * 3, base + t);
+                M3_MEM[y][x] = colorSafe(base + t * 5, base + t * 3, base + t);
             }
         }
         ++t;
