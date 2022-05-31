@@ -5,8 +5,8 @@
 #include <stdarg.h>
 #include <string.h>
 
-#define REG_DEBUG_ENABLE (vu16*)0x4fff780
-#define REG_DEBUG_FLAGS (vu16*)0x4fff700
+#define REG_DEBUG_ENABLE *(vu16*)0x4fff780
+#define REG_DEBUG_FLAGS *(vu16*)0x4fff700
 #define REG_DEBUG_STRING (char*)0x4fff600
 
 #define MGBA_LOG_FATAL 0
@@ -24,8 +24,8 @@ static int status = STATUS_UNINITIALIZED;
 static bool
 isMgba() noexcept {
     if (status == STATUS_UNINITIALIZED) {
-        *REG_DEBUG_ENABLE = 0xc0de;
-        status = *REG_DEBUG_ENABLE == 0x1dea ? STATUS_OKAY : STATUS_NOT_MGBA;
+        REG_DEBUG_ENABLE = 0xc0de;
+        status = REG_DEBUG_ENABLE == 0x1dea ? STATUS_OKAY : STATUS_NOT_MGBA;
     }
     return status == STATUS_OKAY;
 }
@@ -121,6 +121,6 @@ printf_(const char* format, ...) noexcept {
     va_start(va, format);
     vsprintf_(REG_DEBUG_STRING, format, va);
     va_end(va);
-    *REG_DEBUG_FLAGS = MGBA_LOG_WARN | 0x100;
+    REG_DEBUG_FLAGS = MGBA_LOG_WARN | 0x100;
 #endif
 }
