@@ -40,6 +40,12 @@
 #define GREEN_SHIFT 5
 #define BLUE_SHIFT 10
 
+// struct Color {
+//     u16 red:5;
+//     u16 green:5;
+//     u16 blue:5;
+//     u16 unused:1;
+// };
 typedef u16 Color;
 
 typedef Color M3Line[SCREEN_WIDTH];
