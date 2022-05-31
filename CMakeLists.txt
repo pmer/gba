@@ -8,7 +8,9 @@ add_executable(
         playground
         src/gfx.cpp
         src/gfx.h
-        src/hw/reg.h
+        src/hw/audio.h
+        src/hw/int.h
+        src/hw/mm.h
         src/hw/video.h
         src/main.cpp
         src/math.cpp

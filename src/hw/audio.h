@@ -1,7 +1,7 @@
 #pragma once
 
 #include "int.h"
-#include "reg.h"
+#include "mm.h"
 
 // Channel 1 Square wave with sweep.
 #define REG_SND1SWEEP *(vu16*)(REG_BASE + 0x60)  // Sweep.
