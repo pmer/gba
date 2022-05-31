@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.13)
 include($ENV{DEVKITPRO}/cmake/devkitARM.cmake)
 project(playground)
 
@@ -42,17 +42,22 @@ add_custom_command(
 )
 
 set(COMPILE_FLAGS "-mcpu=arm7tdmi -mtune=arm7tdmi -mthumb -mthumb-interwork -ffast-math")
-set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} ${COMPILE_FLAGS}")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILE_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_COMPILE_FLAGS} -fno-rtti -fno-exceptions")
+set(CMAKE_ASM_FLAGS "${COMPILE_FLAGS}")
+set(CMAKE_C_FLAGS "${COMPILE_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_COMPILE_FLAGS} -fno-rtti -fno-exceptions")
+set(CMAKE_EXE_LINKER_FLAGS "-specs=gba.specs")
 
-set(FLAGS_RELEASE "-fomit-frame-pointer -fno-unwind-tables -fno-asynchronous-unwind-tables -fvisibility=hidden -fno-stack-protector -flto")
-set(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} ${FLAGS_RELEASE}")
-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${FLAGS_RELEASE}")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${FLAGS_RELEASE}")
+set(FLAGS_DEBUG "-g")
+set(CMAKE_ASM_FLAGS_DEBUG "${FLAGS_DEBUG}")
+set(CMAKE_C_FLAGS_DEBUG "${FLAGS_DEBUG}")
+set(CMAKE_CXX_FLAGS_DEBUG "${FLAGS_DEBUG}")
+set(CMAKE_EXE_LINKER_FLAGS_DEBUG "-g")
 
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -specs=gba.specs")
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_RELEASE_FLAGS} -flto")
+set(FLAGS_RELEASE "-DNDEBUG -fomit-frame-pointer -fno-unwind-tables -fno-asynchronous-unwind-tables -fvisibility=hidden -fno-stack-protector -flto")
+set(CMAKE_ASM_FLAGS_RELEASE "${FLAGS_RELEASE}")
+set(CMAKE_C_FLAGS_RELEASE "${FLAGS_RELEASE}")
+set(CMAKE_CXX_FLAGS_RELEASE "${FLAGS_RELEASE}")
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-flto")
 
 #target_link_directories(playground PUBLIC ${DEVKITPRO}/libgba/lib)
 #target_link_libraries(playground mm)

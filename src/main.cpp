@@ -42,15 +42,13 @@ main() noexcept {
 
     pong();
 
-    //REG_DISPCNT = DCNT_MODE0 | DCNT_BG0;
-
     /*
-    mode3();
+    REG_DISPCNT = DCNT_MODE0 | DCNT_BG2;
 
-    COLOR salmon = RGB15(31, 5, 12);
+    Color salmon = COLOR(31, 5, 12);
     drawRect(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40, salmon);
 
-    COLOR green = RGB15(1, 24, 16);
+    Color green = COLOR(1, 24, 16);
     drawLine(20 - 1, 20 - 1, 0 - 1, 0 - 1, green); // Top-left.
     drawLine(220, 20 - 1, 240, 0 - 1, green); // Top-right.
     drawLine(20 - 1, 140, 0 - 1, 160, green); // Bottom-left.
@@ -62,9 +60,9 @@ main() noexcept {
     irq_add(II_VBLANK, nullptr);
 
     //sing();
-
-    drawPattern();
-
-    halt();
     */
+
+    //drawPattern();
+
+    //halt();
 }
