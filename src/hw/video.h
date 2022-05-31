@@ -3,6 +3,18 @@
 #include "int.h"
 #include "mm.h"
 
+// Display timing details
+//
+// subject  | length           | cycles
+// ---------+------------------+-------
+// pixel    | 1                | 4
+// H-Draw   | 240px            | 960
+// H-Blank  | 68px             | 272
+// scanline | H-Draw + H-Blank | 1232
+// V-Draw   | 160 * scanline   | 197120
+// V-Blank  | 68 * scanline    | 83776
+// refresh  | V-Draw + V-Blank | 280896
+
 // Display control
 // struct DisplayController {
 //     // Selects the BG mode.
@@ -43,17 +55,24 @@
 // };
 #define REG_DISPCNT *(vu16*)(REG_BASE + 0x0)
 
-#define DCNT_MODE0 0x1  // Sprite mode 0.
-#define DCNT_MODE1 0x2  // Sprite mode 1.
-#define DCNT_MODE2 0x3  // Sprite mode 2.
-#define DCNT_MODE3 0x3  // Mode 3. Background 2 is a 240x160 @ 16bpp bitmap.
-#define DCNT_MODE4 0x4  // Mode 4. 240x160 @ 8bpp bitmap.
-#define DCNT_MODE5 0x5  // Mode 5. 160x128 @ 16bpp bitmap.
+#define DCNT_MODE0 0x1  // Mode 0: Characters
+#define DCNT_MODE1 0x2  // Mode 1: Characters
+#define DCNT_MODE2 0x3  // Mode 2: Characters
+#define DCNT_MODE3 0x3  // Mode 3: Bitmap 1-frame 240x160 @ 16bpp
+#define DCNT_MODE4 0x4  // Mode 4: Bitmap 2-frames 240x160 @ 8bpp
+#define DCNT_MODE5 0x5  // Mode 5: Bitmap 2-frames 160x128 @ 16bpp
+#define DCNT_PAGE 0x10
+#define DCNT_OAM_HBL 0x20
+#define DCNT_OBJ_1D 0x40
+#define DCNT_BLANK 0x80
 #define DCNT_BG0 0x100  // Enable background 0.
 #define DCNT_BG1 0x200  // Enable background 1.
 #define DCNT_BG2 0x400  // Enable background 2.
 #define DCNT_BG3 0x800  // Enable background 3.
 #define DCNT_OBJ 0x1000
+#define DCNT_WIN0 0x2000
+#define DCNT_WIN1 0x4000
+#define DCNT_WINOBJ 0x8000
 
 // struct DisplayStatus {
 //     u16 vblankStatus:1;  // 1 = in a V-Blank
