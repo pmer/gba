@@ -52,6 +52,15 @@ drawLine(i32 x, i32 y, i32 x2, i32 y2, Color color) noexcept {
     }
 }
 
+u16* page = (u16*)MEM_VRAM;
+
+u16*
+flip() noexcept {
+    page = (u16*)((u32)page ^ VRAM_FLIP);
+    REG_DISPCNT ^= DCNT_PAGE;
+    return page;
+}
+
 void
 vsync() noexcept {
     while (REG_VCOUNT >= SCREEN_HEIGHT);

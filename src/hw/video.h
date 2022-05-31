@@ -65,10 +65,10 @@
 #define DCNT_OAM_HBL 0x20
 #define DCNT_OBJ_1D 0x40
 #define DCNT_BLANK 0x80
-#define DCNT_BG0 0x100  // Enable background 0.
-#define DCNT_BG1 0x200  // Enable background 1.
-#define DCNT_BG2 0x400  // Enable background 2.
-#define DCNT_BG3 0x800  // Enable background 3.
+#define DCNT_BG0 0x100  // Enable background 0
+#define DCNT_BG1 0x200  // Enable background 1
+#define DCNT_BG2 0x400  // Enable background 2
+#define DCNT_BG3 0x800  // Enable background 3
 #define DCNT_OBJ 0x1000
 #define DCNT_WIN0 0x2000
 #define DCNT_WIN1 0x4000
@@ -109,7 +109,9 @@
 #define M3_MEM ((M3Line*)MEM_VRAM)
 #define SCREEN_WIDTH 240
 #define SCREEN_HEIGHT 160
+#define VRAM_FLIP 0xa000
 
+// Colors
 #define CLR_BLACK 0x0
 #define CLR_RED COLOR(31, 0, 0)
 #define CLR_LIME COLOR(0, 31, 0)

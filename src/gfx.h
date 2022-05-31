@@ -15,5 +15,8 @@ drawRect(i32 left, i32 top, i32 width, i32 height, Color color) noexcept;
 void
 drawLine(i32 x, i32 y, i32 x2, i32 y2, Color color) noexcept;
 
+u16*
+flip() noexcept;
+
 void
 vsync() noexcept;

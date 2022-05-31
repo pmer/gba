@@ -3,6 +3,7 @@
 #include "gfx.h"
 #include "math.h"
 
+#include "hw/input.h"
 #include "hw/video.h"
 
 struct Ball {
@@ -97,6 +98,15 @@ pong() noexcept {
         paddleClear(&p2);
 
         ballMove(&ball);
+
+        if (KEY_IS_DOWN(KEY_UP)) {
+            p1.y -= 1;
+            p1.y = max(0, p1.y);
+        }
+        if (KEY_IS_DOWN(KEY_DOWN)) {
+            p1.y += 1;
+            p1.y = min(p1.y, SCREEN_HEIGHT - p1.height);
+        }
 
         ballDraw(&ball);
         paddleDraw(&p1);
