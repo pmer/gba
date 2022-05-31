@@ -6,7 +6,7 @@
 
 Open the nightly build in any Game Boy Advance emulator.
 
-[Download nightly ROM](https://nightly.link/pmer/gba/workflows/build/main/untitled.gba.zip)
+[Download nightly ROM](https://nightly.link/pmer/gba/workflows/build/main/playground.gba.zip)
 
 #### Development
 
@@ -19,11 +19,11 @@ should be sufficient to get a CMake build going, which will produce a `.gba`
 file.
 
 To debug, launch [mGBA](https://mgba.io/) with the `-g` flag,  as in `mgba -g
-build/untitled.gba`, which will cause it to start a GDB server and wait for a
+build/playground.gba`, which will cause it to start a GDB server and wait for a
 connection.  Connect to it with:
 
 ```
-$ gdb build/untitled.elf
+$ gdb build/playground.elf
 (gdb) target remote localhost:2345
 ```
 

@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.18)
 include($ENV{DEVKITPRO}/cmake/devkitARM.cmake)
-project(untitled)
+project(playground)
 
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(
-        untitled
+        playground
         src/gfx.cpp
         src/gfx.h
         src/hw/reg.h
@@ -22,21 +22,21 @@ add_executable(
         src/tonc.h
 )
 
-#add_custom_target(run COMMAND $ENV{MGBA} ${CMAKE_CURRENT_BINARY_DIR}/untitled.gba)
-#add_custom_target(debug COMMAND $ENV{MGBA} -g ${CMAKE_CURRENT_BINARY_DIR}/untitled.gba)
+#add_custom_target(run COMMAND $ENV{MGBA} ${CMAKE_CURRENT_BINARY_DIR}/playground.gba)
+#add_custom_target(debug COMMAND $ENV{MGBA} -g ${CMAKE_CURRENT_BINARY_DIR}/playground.gba)
 
 set(CMAKE_EXECUTABLE_SUFFIX .elf)
 
 add_custom_command(
-        TARGET untitled
+        TARGET playground
         POST_BUILD
-        COMMAND ${DEVKITPRO}/devkitARM/bin/arm-none-eabi-objcopy -O binary untitled.elf untitled.gba
+        COMMAND ${DEVKITPRO}/devkitARM/bin/arm-none-eabi-objcopy -O binary playground.elf playground.gba
 )
 
 add_custom_command(
-        TARGET untitled
+        TARGET playground
         POST_BUILD
-        COMMAND ${DEVKITPRO}/tools/bin/gbafix untitled.gba
+        COMMAND ${DEVKITPRO}/tools/bin/gbafix playground.gba
 )
 
 set(COMPILE_FLAGS "-mcpu=arm7tdmi -mtune=arm7tdmi -mthumb -mthumb-interwork -ffast-math")
@@ -52,10 +52,10 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${FLAGS_RELEASE}")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -specs=gba.specs")
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_RELEASE_FLAGS} -flto")
 
-#target_link_directories(untitled PUBLIC ${DEVKITPRO}/libgba/lib)
-#target_link_libraries(untitled mm)
-#target_link_libraries(untitled gba)
+#target_link_directories(playground PUBLIC ${DEVKITPRO}/libgba/lib)
+#target_link_libraries(playground mm)
+#target_link_libraries(playground gba)
 
-target_link_directories(untitled PUBLIC ${DEVKITPRO}/libtonc/lib)
-target_include_directories(untitled PUBLIC ${DEVKITPRO}/libtonc/include)
-target_link_libraries(untitled tonc)
+target_link_directories(playground PUBLIC ${DEVKITPRO}/libtonc/lib)
+target_include_directories(playground PUBLIC ${DEVKITPRO}/libtonc/include)
+target_link_libraries(playground tonc)
