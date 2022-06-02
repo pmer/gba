@@ -79,16 +79,25 @@ paddleClear(Paddle* paddle) noexcept {
     drawRect(paddle->x, paddle->y, paddle->width, paddle->height, CLR_BLACK);
 }
 
+static void
+drawNet() noexcept {
+    const int W = 2;
+    const int H = 4;
+    for (int i = H >> 1; i < SCREEN_HEIGHT - H; i += 2 * H) {
+        drawRect((SCREEN_WIDTH >> 1) - (W >> 1), i, W, H, CLR_WHITE);
+    }
+}
+
 void
 pong() noexcept {
     randSeed(23343);
 
     Ball ball;
-    ballInit(&ball, SCREEN_WIDTH >> 1, SCREEN_HEIGHT >> 1, 10, CLR_WHITE);
+    ballInit(&ball, SCREEN_WIDTH >> 1, SCREEN_HEIGHT >> 1, 4, CLR_WHITE);
 
     Paddle p1, p2;
-    paddleInit(&p1, 10, 60, 8, 40, CLR_BLUE);
-    paddleInit(&p2, SCREEN_WIDTH - 18, 60, 8, 40, CLR_RED);
+    paddleInit(&p1, 10, 60, 4, 14, CLR_WHITE);
+    paddleInit(&p2, SCREEN_WIDTH - 18, 60, 4, 14, CLR_WHITE);
 
     REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
 
@@ -112,8 +121,7 @@ pong() noexcept {
         paddleDraw(&p1);
         paddleDraw(&p2);
 
-        drawLine(10, 4, 230, 4, CLR_WHITE);
-        drawLine(230, 156, 10, 156, CLR_WHITE);
+        drawNet();
 
         vsync();
     }
