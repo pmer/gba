@@ -38,8 +38,8 @@ ballMove(Ball* ball) noexcept {
 
     ball->x += ball->dx;
     if (ball->x < 0 || ball->x > SCREEN_WIDTH - ball->size) {
-        ball->x = SCREEN_WIDTH >> 1;
-        ball->y = SCREEN_HEIGHT >> 1;
+        ball->x = (SCREEN_WIDTH >> 1) - (ball->size >> 1);
+        ball->y = (SCREEN_HEIGHT >> 1) - (ball->size >> 1);
         ballStart(ball);
     }
 }
@@ -96,8 +96,8 @@ pong() noexcept {
     ballInit(&ball, SCREEN_WIDTH >> 1, SCREEN_HEIGHT >> 1, 4, CLR_WHITE);
 
     Paddle p1, p2;
-    paddleInit(&p1, 10, 60, 4, 14, CLR_WHITE);
-    paddleInit(&p2, SCREEN_WIDTH - 18, 60, 4, 14, CLR_WHITE);
+    paddleInit(&p1, 40 - 2, (SCREEN_HEIGHT >> 1) - 7, 4, 14, CLR_WHITE);
+    paddleInit(&p2, SCREEN_WIDTH - 40 - 2, (SCREEN_HEIGHT >> 1) - 7, 4, 14, CLR_WHITE);
 
     REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
 
