@@ -6,6 +6,12 @@
 
 #include "hw/video.h"
 
+extern "C" {
+void irq_init(void*);
+void* irq_add(int, void*);
+#define II_VBLANK 0
+}
+
 static void
 drawPattern() noexcept {
     REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
@@ -38,9 +44,9 @@ halt() noexcept {
 
 int
 main() noexcept {
-    //printf_("Hello, world!");
+    printf_("Hello, world!");
 
-    pong();
+    // pong();
 
     /*
     REG_DISPCNT = DCNT_MODE0 | DCNT_BG2;
@@ -55,14 +61,14 @@ main() noexcept {
     drawLine(220, 140, 240, 160, green); // Bottom-right.
     */
 
-    /*
+    
     irq_init(nullptr);
     irq_add(II_VBLANK, nullptr);
 
-    //sing();
-    */
+    sing();
+    
 
     //drawPattern();
 
-    //halt();
+    halt();
 }
