@@ -27,7 +27,7 @@ sos() noexcept {
     const u8 lens[NOTES] = {
         1, 1, 4, 1, 1, 4, 
         4, 1, 1, 1, 1, 1, 4, 
-        2, 4, 2, 2, 4, 1, 1, 2 // TODO: Fix rythm
+        2, 2, 2, 2, 2, 1, 1, 2 // TODO: Fix rythm
         };
     const u8 notes[NOTES] = {
         0x02, 0x05, 0x12, 0x02, 0x05, 0x12, 
