@@ -92,22 +92,36 @@ ballClear(Ball *ball) noexcept {
 }
 
 static void
-paddleInit(Paddle *paddle, i32 x, i32 y, i32 width, i32 height, Color color) noexcept {
-    paddle->x = x;
-    paddle->y = y;
-    paddle->width = width;
-    paddle->height = height;
-    paddle->color = color;
+paddleInit(Paddle *p, i32 x, i32 y, i32 width, i32 height, Color color) noexcept {
+    p->x = x;
+    p->y = y;
+    p->width = width;
+    p->height = height;
+    p->color = color;
 }
 
 static void
-paddleDraw(Paddle *paddle) noexcept {
-    drawRect(paddle->x, paddle->y, paddle->width, paddle->height, paddle->color);
+paddleAI(Paddle *p, Ball *b) noexcept {
+    int byc = b->y + (B_H >> 1);
+    int pyc = p->y + (P_H >> 1);
+    if (byc < pyc) {
+        p->y -= 1;
+        p->y = max(0, p->y);
+    }
+    else if (byc > pyc) {
+        p->y += 1;
+        p->y = min(p->y, SCREEN_HEIGHT - P_H);
+    }
 }
 
 static void
-paddleClear(Paddle *paddle) noexcept {
-    drawRect(paddle->x, paddle->y, paddle->width, paddle->height, CLR_BLACK);
+paddleDraw(Paddle *p) noexcept {
+    drawRect(p->x, p->y, P_W, P_H, p->color);
+}
+
+static void
+paddleClear(Paddle *p) noexcept {
+    drawRect(p->x, p->y, P_W, P_H, CLR_BLACK);
 }
 
 static void
@@ -151,6 +165,7 @@ pong() noexcept {
         ballMove(&ball);
         ballIntersect(&ball, &p1);
         ballIntersect(&ball, &p2);
+        paddleAI(&p2, &ball);
 
         ballDraw(&ball);
         paddleDraw(&p1);
