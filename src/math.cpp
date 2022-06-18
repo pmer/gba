@@ -17,6 +17,11 @@ rand_() noexcept {
 }
 
 void
+randConsume() noexcept {
+    rand_();
+}
+
+void
 randSeed(i32 seed_) noexcept {
     seed = seed_;
 }

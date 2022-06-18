@@ -12,6 +12,11 @@
 #define P_W 4
 #define P_H 14
 
+#define AI 0
+
+int score1 = 0;
+int score2 = 0;
+
 static bool
 areIntersecting(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) noexcept {
     int l1 = x1;
@@ -63,8 +68,18 @@ ballMove(Ball *ball) noexcept {
 
     ball->x += ball->dx;
     if (ball->x < 0 || ball->x > SCREEN_WIDTH - ball->size) {
-        ball->x = (SCREEN_WIDTH >> 1) - (ball->size >> 1);
-        ball->y = (SCREEN_HEIGHT >> 1) - (ball->size >> 1);
+        if (ball->x < 0) {
+            score2++;
+        }
+        else {
+            score1++;
+            randConsume();
+        }
+        int score = score1 + score2;
+        int xRange = max(3 * score, 10);
+        int yRange = max(3 * score, 15);
+        ball->x = (SCREEN_WIDTH >> 1) - (ball->size >> 1) + randRange(-xRange, xRange);
+        ball->y = (SCREEN_HEIGHT >> 1) - (ball->size >> 1) + randRange(-yRange, yRange);
         ballStart(ball);
     }
 }
@@ -78,6 +93,7 @@ ballIntersect(Ball *ball, Paddle *p) noexcept {
         int dyc = byc - pyc; // [? to ?]
         int ycSpan = (B_W >> 1) + (P_H >> 1); // 9
         ball->dy = dyc >> 1; // [-4 to 4]
+        ball->dx += randRange(-1, 1);
     }
 }
 
@@ -101,16 +117,19 @@ paddleInit(Paddle *p, i32 x, i32 y, i32 width, i32 height, Color color) noexcept
 }
 
 static void
+paddleMove(Paddle *p, int dy) noexcept {
+    p->y += dy;
+    p->y = max(0, min(p->y, SCREEN_HEIGHT - P_H));
+}
+
+static void
 paddleAI(Paddle *p, Ball *b) noexcept {
     int byc = b->y + (B_H >> 1);
     int pyc = p->y + (P_H >> 1);
     if (byc < pyc) {
-        p->y -= 1;
-        p->y = max(0, p->y);
-    }
-    else if (byc > pyc) {
-        p->y += 1;
-        p->y = min(p->y, SCREEN_HEIGHT - P_H);
+        paddleMove(p, -1);
+    } else if (byc > pyc) {
+        paddleMove(p, 1);
     }
 }
 
@@ -154,18 +173,26 @@ pong() noexcept {
         paddleClear(&p2);
 
         if (KEY_IS_DOWN(KEY_UP)) {
-            p1.y -= 1;
-            p1.y = max(0, p1.y);
+            paddleMove(&p1, -1);
         }
         if (KEY_IS_DOWN(KEY_DOWN)) {
-            p1.y += 1;
-            p1.y = min(p1.y, SCREEN_HEIGHT - p1.height);
+            paddleMove(&p1, 1);
         }
+
+#if AI
+        paddleAI(&p2, &ball);
+#else
+        if (KEY_IS_DOWN(KEY_B)) {
+            paddleMove(&p2, -1);
+        }
+        if (KEY_IS_DOWN(KEY_A)) {
+            paddleMove(&p2, 1);
+        }
+#endif
 
         ballMove(&ball);
         ballIntersect(&ball, &p1);
         ballIntersect(&ball, &p2);
-        paddleAI(&p2, &ball);
 
         ballDraw(&ball);
         paddleDraw(&p1);

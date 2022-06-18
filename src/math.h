@@ -8,6 +8,9 @@ abs(i32 i) noexcept;
 void
 randSeed(i32 seed) noexcept;
 
+void
+randConsume() noexcept;
+
 /**
  * Random number from min to max, inclusive.
  */
