@@ -9,7 +9,7 @@ void
 randSeed(i32 seed) noexcept;
 
 void
-randConsume() noexcept;
+randConsume(int count) noexcept;
 
 /**
  * Random number from min to max, inclusive.

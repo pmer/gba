@@ -73,7 +73,7 @@ ballMove(Ball *ball) noexcept {
         }
         else {
             score1++;
-            randConsume();
+            randConsume(1);
         }
         int score = score1 + score2;
         int xRange = max(3 * score, 10);
@@ -174,9 +174,11 @@ pong() noexcept {
 
         if (KEY_IS_DOWN(KEY_UP)) {
             paddleMove(&p1, -1);
+            randConsume(1);
         }
         if (KEY_IS_DOWN(KEY_DOWN)) {
             paddleMove(&p1, 1);
+            randConsume(2);
         }
 
 #if AI
@@ -184,9 +186,11 @@ pong() noexcept {
 #else
         if (KEY_IS_DOWN(KEY_B)) {
             paddleMove(&p2, -1);
+            randConsume(3);
         }
         if (KEY_IS_DOWN(KEY_A)) {
             paddleMove(&p2, 1);
+            randConsume(4);
         }
 #endif
 

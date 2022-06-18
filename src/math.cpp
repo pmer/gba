@@ -17,8 +17,10 @@ rand_() noexcept {
 }
 
 void
-randConsume() noexcept {
-    rand_();
+randConsume(int count) noexcept {
+    while (count--) {
+        rand_();
+    }
 }
 
 void
