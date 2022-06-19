@@ -17,12 +17,14 @@ randConsume(int count) noexcept;
 i32
 randRange(i32 min, i32 max) noexcept;
 
-static inline int
-max(int a, int b) noexcept {
+template<typename T>
+static inline T
+max(T a, T b) noexcept {
     return a > b ? a : b;
 }
 
-static inline int
-min(int a, int b) noexcept {
+template<typename T>
+static inline T
+min(T a, T b) noexcept {
     return a < b ? a : b;
 }

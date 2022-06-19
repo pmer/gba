@@ -61,12 +61,10 @@ main() noexcept {
     drawLine(220, 140, 240, 160, green); // Bottom-right.
     */
 
-
     irq_init(nullptr);
     irq_add(II_VBLANK, nullptr);
 
     //sing();
-
 
     //drawPattern();
 
